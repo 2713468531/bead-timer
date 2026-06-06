@@ -10,6 +10,10 @@ const PORT = 3000
 // 中间件
 app.use(cors())
 app.use(express.json())
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8')
+  next()
+})
 
 // 根路径
 app.get('/', (req, res) => {
