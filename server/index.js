@@ -52,9 +52,8 @@ async function startServer() {
   const dbConnected = await testConnection()
   
   if (!dbConnected) {
-    console.error('无法启动服务器：数据库连接失败')
-    console.error('请确保MySQL服务已启动，且数据库配置正确')
-    process.exit(1)
+    console.error('警告：数据库连接失败，但服务器将继续启动')
+    console.error('请检查数据库配置或稍后再试')
   }
   
   app.listen(PORT, () => {
