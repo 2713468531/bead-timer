@@ -43,11 +43,12 @@ router.post('/create', async (req, res) => {
       [name, phone, remark]
     )
     
-    res.json({ 
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ 
       success: true, 
       message: '会员开卡成功',
       data: { id: memberId, name, phone, balance: 0, remark }
-    })
+    }))
   } catch (error) {
     console.error('创建会员失败:', error)
     res.status(500).json({ 
@@ -82,7 +83,8 @@ router.get('/search', async (req, res) => {
     }
     
     const member = members[0]
-    res.json({ 
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ 
       success: true, 
       data: {
         id: member.id,
@@ -94,7 +96,7 @@ router.get('/search', async (req, res) => {
         totalConsume: parseFloat(member.total_consume),
         remark: member.remark || ''
       }
-    })
+    }))
   } catch (error) {
     console.error('查询会员失败:', error)
     res.status(500).json({ 
@@ -123,10 +125,11 @@ router.get('/list', async (req, res) => {
       status: m.status
     }))
     
-    res.json({ 
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ 
       success: true, 
       data: list 
-    })
+    }))
   } catch (error) {
     console.error('获取会员列表失败:', error)
     res.status(500).json({ 
@@ -290,10 +293,11 @@ router.get('/recharge-history', async (req, res) => {
       createTime: r.create_time
     }))
     
-    res.json({ 
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ 
       success: true, 
       data: list 
-    })
+    }))
   } catch (error) {
     console.error('获取充值记录失败:', error)
     res.status(500).json({ 

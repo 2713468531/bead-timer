@@ -17,12 +17,13 @@ app.use((req, res, next) => {
 
 // 根路径
 app.get('/', (req, res) => {
-  res.json({ 
+  res.setHeader('Content-Type', 'application/json; charset=utf-8')
+  res.end(JSON.stringify({ 
     success: true,
     message: '拼豆DIY会员系统API服务',
     version: '1.0.0',
     health: '/api/health'
-  })
+  }))
 })
 
 // 路由
