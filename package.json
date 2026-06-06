@@ -7,8 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "cd server && npm install && npm start",
-    "install-all": "npm install && cd server && npm install"
+    "start": "npm run start:backend",
+    "start:backend": "npm install --prefix server && node server/index.js",
+    "install-all": "npm install && npm install --prefix server"
   },
   "dependencies": {
     "vue": "^3.4.21",
