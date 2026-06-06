@@ -18,6 +18,12 @@ const dbConfig = {
 // 创建连接池
 const pool = mysql.createPool(dbConfig)
 
+// 监听连接创建事件，设置字符集
+pool.on('connection', (connection) => {
+  connection.query('SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci')
+  connection.query('SET CHARACTER SET utf8mb4')
+})
+
 // 测试数据库连接
 export async function testConnection() {
   try {
