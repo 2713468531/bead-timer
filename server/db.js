@@ -8,7 +8,9 @@ const dbConfig = {
   database: process.env.DB_NAME || 'bead_timer',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  charset: 'utf8mb4',
+  timezone: '+00:00'
 }
 
 // 创建连接池
