@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise'
+import iconv from 'iconv-lite'
 
 // 数据库连接配置 - 支持环境变量
 const dbConfig = {

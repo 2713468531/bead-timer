@@ -43,12 +43,13 @@ router.post('/create', async (req, res) => {
       [name, phone, remark]
     )
     
-    res.setHeader('Content-Type', 'application/json; charset=utf-8')
-    res.end(JSON.stringify({ 
+    const response = JSON.stringify({ 
       success: true, 
       message: '会员开卡成功',
       data: { id: memberId, name, phone, balance: 0, remark }
-    }))
+    })
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(Buffer.from(response, 'utf8'))
   } catch (error) {
     console.error('创建会员失败:', error)
     res.status(500).json({ 
