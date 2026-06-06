@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { testConnection } from './db.js'
+import { testConnection, query } from './db.js'
 import memberRoutes from './routes/member.js'
 import orderRoutes from './routes/order.js'
 
