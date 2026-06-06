@@ -11,7 +11,8 @@ const dbConfig = {
   queueLimit: 0,
   charset: 'utf8mb4',
   timezone: '+00:00',
-  collation: 'utf8mb4_unicode_ci'
+  collation: 'utf8mb4_unicode_ci',
+  initSqls: ['SET NAMES utf8mb4', 'SET CHARACTER SET utf8mb4']
 }
 
 // 创建连接池
