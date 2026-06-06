@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: linear-gradient(135deg, #FFE6E6 0%, #E6F7FF 50%, #FFF5E6 100%);
+  min-height: 100vh;
+}
+
+.table-card {
+  @apply rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer;
+}
+
+.btn-primary {
+  @apply bg-primary text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200;
+}
+
+.btn-warning {
+  @apply bg-warning text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200;
+}
+
+.btn-danger {
+  @apply bg-danger text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200;
+}
+
+.btn-success {
+  @apply bg-success text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200;
+}
+
+.btn-info {
+  @apply bg-info text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200;
+}
+
+.status-free {
+  @apply bg-success/10 border-success/30 text-success;
+}
+
+.status-working {
+  @apply bg-danger/10 border-danger/30 text-danger;
+}
+
+.status-paused {
+  @apply bg-warning/10 border-warning/30 text-warning;
+}
+
+.status-badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border;
+}
