@@ -25,6 +25,84 @@ app.get('/', (req, res) => {
 app.use('/api/member', memberRoutes)
 app.use('/api/order', orderRoutes)
 
+// 数据库初始化
+app.get('/api/init-db', async (req, res) => {
+  try {
+    const createMemberTable = `
+      CREATE TABLE IF NOT EXISTS member (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        name VARCHAR(50) NOT NULL,
+        phone VARCHAR(11) NOT NULL,
+        balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        total_recharge DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        total_consume DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        remark VARCHAR(255) DEFAULT NULL,
+        status TINYINT(1) NOT NULL DEFAULT 1,
+        PRIMARY KEY (id),
+        UNIQUE KEY uk_phone (phone),
+        KEY idx_status (status),
+        KEY idx_create_time (create_time)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `
+    
+    const createRechargeTable = `
+      CREATE TABLE IF NOT EXISTS member_recharge (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        member_id INT(11) NOT NULL,
+        phone VARCHAR(11) NOT NULL,
+        recharge_money DECIMAL(10,2) NOT NULL,
+        after_balance DECIMAL(10,2) NOT NULL,
+        create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY idx_member_id (member_id),
+        KEY idx_phone (phone),
+        KEY idx_create_time (create_time),
+        CONSTRAINT fk_recharge_member FOREIGN KEY (member_id) REFERENCES member (id) ON DELETE CASCADE
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `
+    
+    const createOrdersTable = `
+      CREATE TABLE IF NOT EXISTS orders (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        table_id INT(11) NOT NULL,
+        table_name VARCHAR(50) NOT NULL,
+        start_time DATETIME NOT NULL,
+        end_time DATETIME NOT NULL,
+        duration INT(11) NOT NULL DEFAULT 0,
+        price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        package_name VARCHAR(100) DEFAULT NULL,
+        remark VARCHAR(255) DEFAULT NULL,
+        member_phone VARCHAR(11) DEFAULT NULL,
+        pay_type VARCHAR(20) NOT NULL DEFAULT '现金',
+        member_pay_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY idx_table_id (table_id),
+        KEY idx_start_time (start_time),
+        KEY idx_end_time (end_time),
+        KEY idx_member_phone (member_phone),
+        KEY idx_pay_type (pay_type)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `
+    
+    await query(createMemberTable)
+    await query(createRechargeTable)
+    await query(createOrdersTable)
+    
+    res.json({ 
+      success: true, 
+      message: '数据库表初始化成功' 
+    })
+  } catch (error) {
+    console.error('数据库初始化失败:', error)
+    res.status(500).json({ 
+      success: false, 
+      message: '数据库初始化失败: ' + error.message 
+    })
+  }
+})
+
 // 健康检查
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: '服务运行正常' })
