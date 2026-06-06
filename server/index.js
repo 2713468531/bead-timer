@@ -30,6 +30,17 @@ app.get('/', (req, res) => {
 app.use('/api/member', memberRoutes)
 app.use('/api/order', orderRoutes)
 
+// 检查数据库字符集
+app.get('/api/db-charset', async (req, res) => {
+  try {
+    const results = await query("SHOW VARIABLES LIKE 'character_set%'")
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ success: true, data: results }))
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+})
+
 // 数据库初始化
 app.get('/api/init-db', async (req, res) => {
   try {
