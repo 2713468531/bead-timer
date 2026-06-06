@@ -35,34 +35,55 @@ export async function testConnection() {
 
 // 执行查询
 export async function query(sql, params = []) {
+  let connection
   try {
-    const [rows] = await pool.execute(sql, params)
+    connection = await pool.getConnection()
+    await connection.query('SET NAMES utf8mb4')
+    const [rows] = await connection.query(sql, params)
     return rows
   } catch (error) {
     console.error('SQL执行错误:', error)
     throw error
+  } finally {
+    if (connection) {
+      connection.release()
+    }
   }
 }
 
 // 执行插入并返回插入ID
 export async function insert(sql, params = []) {
+  let connection
   try {
-    const [result] = await pool.execute(sql, params)
+    connection = await pool.getConnection()
+    await connection.query('SET NAMES utf8mb4')
+    const [result] = await connection.query(sql, params)
     return result.insertId
   } catch (error) {
     console.error('SQL插入错误:', error)
     throw error
+  } finally {
+    if (connection) {
+      connection.release()
+    }
   }
 }
 
 // 执行更新并返回影响行数
 export async function update(sql, params = []) {
+  let connection
   try {
-    const [result] = await pool.execute(sql, params)
+    connection = await pool.getConnection()
+    await connection.query('SET NAMES utf8mb4')
+    const [result] = await connection.query(sql, params)
     return result.affectedRows
   } catch (error) {
     console.error('SQL更新错误:', error)
     throw error
+  } finally {
+    if (connection) {
+      connection.release()
+    }
   }
 }
 
