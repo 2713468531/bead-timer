@@ -33,8 +33,8 @@ app.use('/api/order', orderRoutes)
 // 数据库初始化
 app.get('/api/init-db', async (req, res) => {
   try {
-    // 先设置数据库字符集
-    await query("ALTER DATABASE bead_timer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+    // 先创建数据库（如果不存在）
+    await query("CREATE DATABASE IF NOT EXISTS bead_timer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
     
     const createMemberTable = `
       CREATE TABLE IF NOT EXISTS member (
