@@ -10,7 +10,8 @@ const dbConfig = {
   connectionLimit: 10,
   queueLimit: 0,
   charset: 'utf8mb4',
-  timezone: '+00:00'
+  timezone: '+00:00',
+  collation: 'utf8mb4_unicode_ci'
 }
 
 // 创建连接池
@@ -20,6 +21,8 @@ const pool = mysql.createPool(dbConfig)
 export async function testConnection() {
   try {
     const connection = await pool.getConnection()
+    await connection.execute('SET NAMES utf8mb4')
+    await connection.execute('SET CHARACTER SET utf8mb4')
     console.log('✓ 数据库连接成功')
     connection.release()
     return true
